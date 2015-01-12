@@ -1,0 +1,77 @@
+import cv2
+import numpy as np
+
+webcam0 = 0
+webcam1 = 0
+
+camera_feed_0 = cv2.VideoCapture(webcam0)
+camera_feed_1 = cv2.VideoCapture(webcam1)
+
+while(1):
+
+    _,frame0 = camera_feed_0.read()
+    _1,frame1 = camera_feed_1.read()
+    #Convert the webcam feeds to HSV images
+    hsv0 = cv2.cvtColor(frame0, cv2.COLOR_BGR2HSV)
+    hsv1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2HSV)
+    #Create a threshold for different colours to track
+    lower_green = np.array([50,80,80])
+    upper_green = np.array([90,255,255])
+
+    lower_blue = np.array([100,120,120])
+    upper_blue = np.array([130,255,255])
+    #Apply the threshold to the two different webcam feeds
+    mask0 = cv2.inRange(hsv0, lower_green, upper_green)
+    mask1 = cv2.inRange(hsv1, lower_blue, upper_blue)
+    #Using erosion and dilation smooth the image
+    element0 = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+    element1 = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+    mask0 = cv2.erode(mask0,element0, iterations=2)
+    mask1 = cv2.erode(mask1,element1, iterations=2)
+    mask0 = cv2.dilate(mask0,element0,iterations=2)
+    mask1 = cv2.dilate(mask1,element1,iterations=2)
+    mask0 = cv2.erode(mask0,element0)
+    mask1 = cv2.erode(mask1,element1)
+    #Find the biggest object of the chosen colour with contours and create a bounding box around it
+    contours0, hierarchy0 = cv2.findContours(mask0, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    maximumArea0 = 0
+    bestContour0 = None
+    for contour0 in contours0:
+        currentArea0 = cv2.contourArea(contour0) 
+        if currentArea0 > maximumArea0:
+            bestContour0 = contour0
+            maximumArea0 = currentArea0         
+    if bestContour0 is not None:
+        x0,y0,w0,h0 = cv2.boundingRect(bestContour0)
+        rect0 = cv2.minAreaRect(bestContour0)
+        box0 = cv2.cv.BoxPoints(rect0)
+        box0 = np.int0(box0)
+        cv2.drawContours(frame0,[box0],0,(130,130,255),2)
+
+    #Repeat the same step for a different colour
+    contours1, hierarchy1 = cv2.findContours(mask1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    maximumArea1 = 0
+    bestContour1 = None
+    for contour1 in contours1:
+        currentArea1 = cv2.contourArea(contour1)
+        
+        if currentArea1 > maximumArea1:
+            bestContour1 = contour1
+            maximumArea1 = currentArea1
+            
+    if bestContour1 is not None:
+        x1,y1,w1,h1 = cv2.boundingRect(bestContour1)
+        rect1 = cv2.minAreaRect(bestContour1)
+        box1 = cv2.cv.BoxPoints(rect1)
+        box1 = np.int0(box1)
+        cv2.drawContours(frame1,[box1],0,(130,130,255),2)
+
+    #Overlay the bounding boxes onto the live webcam feeds
+    cv2.imshow('green object tracker',frame0)
+    cv2.imshow('blue object tracker',frame1)
+    #If the escape key is pressed it will exit the loop and close all the windows
+    k = cv2.waitKey(5)
+    if k == 27:
+        break
+
+cv2.destroyAllWindows()    
