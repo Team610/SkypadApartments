@@ -9,8 +9,8 @@ camera_feed_1 = cv2.VideoCapture(0)
 
 while (1):
 	#Read camera
-	ret0, frame0 = camera_feed_0()
-	ret1, frame1 = camera_feed_1()
+	ret0, frame0 = camera_feed_0.read()
+	ret1, frame1 = camera_feed_1.read()
 
 	#System wait/delay
 	time.sleep(1/fps) #in seconds
