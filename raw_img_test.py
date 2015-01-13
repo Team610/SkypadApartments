@@ -4,8 +4,8 @@ import numpy as np
 
 fps = 30 #frames per second
 
-camera_feed_0 = cv2.CaptureCamera(0)
-camera_feed_1 = cv2.CaptureCamera(0)
+camera_feed_0 = cv2.VideoCapture(0)
+camera_feed_1 = cv2.VideoCapture(0)
 
 while (1):
 	#Read camera
