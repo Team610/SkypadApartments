@@ -31,3 +31,8 @@ while (1):
 
 	# System wait/delay
 	time.sleep(1/fps) #in seconds
+
+# End sequence to clean up all elements
+camera_feed_0.release()	# without this, we might get the resources still being used errors
+camera_feed_1.release()
+cv2.destroyAllWindows()
