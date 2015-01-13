@@ -1,9 +1,11 @@
 import cv2
-import numpy as np
+# import numpy as np
 import time
 
 '''
 This is the most basic implementation of reading and displaying two cameras.
+REF: http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_gui/py_video_display/py_video_display.html
+
 Lots of room for optimization:
 	1. Leveraging hardware/CUDA optimization
 	2. Threading (non-blocking code)
