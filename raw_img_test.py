@@ -1,16 +1,33 @@
 import cv2
-import time
 import numpy as np
+import time
+
+'''
+This is the most basic implementation of reading and displaying two cameras.
+Lots of room for optimization:
+	1. Leveraging hardware/CUDA optimization
+	2. Threading (non-blocking code)
+	3. Using multiprocessor (not sure if it'll work with ARMv5l)
+'''
 
 fps = 30 #frames per second
 
+# Define camera sources
 camera_feed_0 = cv2.VideoCapture(0)
-camera_feed_1 = cv2.VideoCapture(0)
+camera_feed_1 = cv2.VideoCapture(1)
 
 while (1):
-	#Read camera
-	ret0, frame0 = camera_feed_0.read()
+	# Read camera
+	ret0, frame0 = camera_feed_0.read()		#note: in Py you can return multiple variables, #pymagic
 	ret1, frame1 = camera_feed_1.read()
 
-	#System wait/delay
+	# Display camera feeds seperately
+	cv2.imshow('Feed 0', frame0)
+	cv2.imshow('Feed 1', frame1)
+
+	# Exit sequence
+	if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+	# System wait/delay
 	time.sleep(1/fps) #in seconds
