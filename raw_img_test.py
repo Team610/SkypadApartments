@@ -28,8 +28,9 @@ while (1):
 	cv2.imshow('Feed 1', frame1)
 
 	# Exit sequence
-	if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+	# if cv2.waitKey(1) & 0xFF == ord('q'):
+	if cv2.waitKey(1) == 27:
+		break
 
 	# System wait/delay
 	time.sleep(1/fps) #in seconds

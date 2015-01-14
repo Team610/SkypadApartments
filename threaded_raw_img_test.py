@@ -29,8 +29,10 @@ for i in range(len(camera_feed)):
 
 while (1):
 	# Exit sequence
-	if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+	# if cv2.waitKey(1) & 0xFF == ord('q'):
+ #        break
+ 	if cv2.waitKey(1) == 27:
+		break
 
 # End sequence to clean up all elements
 for i in range(len(camera_feed)):
