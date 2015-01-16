@@ -1,25 +1,36 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture(1)
-cap1 = cv2.VideoCapture(0)
-cap.set(cv2.cv.CV_CAP_PROP_FPS, 1)
-cap1.set(cv2.cv.CV_CAP_PROP_FPS, 1)
-x = .5
-y = 0
+cap = cv2.VideoCapture(0)
+
+cap1 = cv2.VideoCapture(1)
+
+cap.set(cv2.cv.CV_CAP_PROP_FPS, 25)
+cap1.set(cv2.cv.CV_CAP_PROP_FPS, 25)
+#cap.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 0.1)
+#cap.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 0.1)
+#cap1.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 0.1)
+#cap1.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 0.1)
+x = 0.005
+y = 0.001
 
 while(True):
     ret, frame = cap.read()
     ret1, frame1 = cap1.read()
-
-    frame3 = frame * x
-    frame4 = frame1 * y
-
-    frame2 = np.hstack((frame,frame1))
-
+    #frame3 = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+   #frame4 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY)
+   # frame3 = frame * x
+    #frame4 = frame1 * y
+    frame3 = frame
+    frame4 = frame1
+    frame5 = np.hstack((frame3,frame4))
+    frame6 = np.hstack((frame3,frame4))
+    frame7 = np.vstack((frame5,frame6))	
+    frame8 = cv2.resize(frame7,(500,500))
     #cv2.imshow('frame',frame)
     #cv2.imshow('frame1',frame1)
-    cv2.imshow('frame2', frame2)  
+    cv2.imshow('frame8', frame8)
+    
     k = cv2.waitKey(5)
     if k == 27:
         break
