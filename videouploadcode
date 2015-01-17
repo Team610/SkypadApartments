@@ -32,7 +32,8 @@ while(True):
     frame8 = cv2.resize(frame7,(500,500))
     frame8string = frame8.tostring()
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    UDP_PORT.sendto(frame8string,UDP_IP)
+    sock.connect((UDP_IP,UDP_PORT))
+    sock.send(frame8string)
     #cv2.imshow('frame',frame)
     #cv2.imshow('frame1',frame1)
     cv2.imshow('frame8', frame8)
@@ -41,4 +42,5 @@ while(True):
     if k == 27:
         break
 
-cv2.destroyAllWindows()    
+cv2.destroyAllWindows()  
+sock.close()
