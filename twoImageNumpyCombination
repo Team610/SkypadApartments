@@ -1,9 +1,6 @@
 import numpy as np
 import cv2
-import socket
 
-UDP_IP = "127.0.0.3"
-UDP_PORT = 5005
 cap = cv2.VideoCapture(0)
 
 cap1 = cv2.VideoCapture(1)
@@ -30,9 +27,6 @@ while(True):
     frame6 = np.hstack((frame3,frame4))
     frame7 = np.vstack((frame5,frame6))	
     frame8 = cv2.resize(frame7,(500,500))
-    frame8string = frame8.tostring()
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.sendto(frame8string,(UDP_IP, UDP_PORT))
     #cv2.imshow('frame',frame)
     #cv2.imshow('frame1',frame1)
     cv2.imshow('frame8', frame8)
