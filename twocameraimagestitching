@@ -1,20 +1,20 @@
 import numpy as np
 import cv2
 
-cap = cv2.VideoCapture(1)
-cap1 = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0)
+cap1 = cv2.VideoCapture(1)
 cap.set(cv2.cv.CV_CAP_PROP_FPS, 1)
 cap1.set(cv2.cv.CV_CAP_PROP_FPS, 1)
 
 while(True):
     ret, frame = cap.read()
     ret1, frame1 = cap1.read()
-    frame2 = frame + frame1
 
     # Display the resulting frame
     cv2.imshow('frame',frame)
     cv2.imshow('frame1',frame1)
-    cv2.imshow('frame2',frame2)
+    cv2.cv.MoveWindow('frame', 0, 0)
+    cv2.cv.MoveWindow('frame1', 625, 0)    
     k = cv2.waitKey(5)
     if k == 27:
         break
