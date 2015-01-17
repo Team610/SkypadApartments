@@ -5,10 +5,15 @@ cap = cv2.VideoCapture(1)
 cap1 = cv2.VideoCapture(0)
 cap.set(cv2.cv.CV_CAP_PROP_FPS, 1)
 cap1.set(cv2.cv.CV_CAP_PROP_FPS, 1)
+x = .5
+y = 0
 
 while(True):
     ret, frame = cap.read()
     ret1, frame1 = cap1.read()
+
+    frame3 = frame * x
+    frame4 = frame1 * y
 
     frame2 = np.hstack((frame,frame1))
 
