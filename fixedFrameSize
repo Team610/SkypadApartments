@@ -1,0 +1,9 @@
+from Tkinter import *
+
+root = Tk()
+
+frame = Frame(root, width=1430, height=715)
+frame.pack()
+
+root.mainloop()
+

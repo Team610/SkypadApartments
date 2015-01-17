@@ -1,5 +1,8 @@
 import numpy as np
 import cv2
+from Tkinter import *
+
+root = Tk()
 
 cap = cv2.VideoCapture(0)
 cap.set(cv2.cv.CV_CAP_PROP_FPS, 30)
@@ -10,8 +13,13 @@ while(True):
     # Display the resulting frame
     cv2.imshow('frame',frame)
     cv2.cv.MoveWindow('frame', 0, 0)
+    frame2 = Frame(root, width = 1430, height = 715)
+    frame2.pack()
     k = cv2.waitKey(5)
     if k == 27:
         break
+    root.mainloop()
+    cv2.imshow('frame',frame2)
+
 
 cv2.destroyAllWindows()    
